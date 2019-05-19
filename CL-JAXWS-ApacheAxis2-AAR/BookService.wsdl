@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:ns="http://service.rs.com"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:ax21="http://model.rs.com/xsd"
+	xmlns:ns1="http://org.apache.axis2/xsd"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+	xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+	targetNamespace="http://service.rs.com">
+	<wsdl:types>
+		<xs:schema attributeFormDefault="qualified"
+			elementFormDefault="qualified"
+			targetNamespace="http://model.rs.com/xsd">
+			<xs:complexType name="Book">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="id" type="xs:long" />
+					<xs:element minOccurs="0" name="author" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="isbn" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="name" nillable="true"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="price" type="xs:float" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema xmlns:ax22="http://model.rs.com/xsd"
+			attributeFormDefault="qualified" elementFormDefault="qualified"
+			targetNamespace="http://service.rs.com">
+			<xs:import namespace="http://model.rs.com/xsd" />
+			<xs:element name="searchBook">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="isbn" nillable="true"
+							type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="searchBookResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="ax22:Book" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="registerBook">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="book" nillable="true"
+							type="ax22:Book" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="registerBookResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="return" nillable="true"
+							type="ax22:Book" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="registerBookRequest">
+		<wsdl:part name="parameters" element="ns:registerBook" />
+	</wsdl:message>
+	<wsdl:message name="registerBookResponse">
+		<wsdl:part name="parameters"
+			element="ns:registerBookResponse" />
+	</wsdl:message>
+	<wsdl:message name="searchBookRequest">
+		<wsdl:part name="parameters" element="ns:searchBook" />
+	</wsdl:message>
+	<wsdl:message name="searchBookResponse">
+		<wsdl:part name="parameters" element="ns:searchBookResponse" />
+	</wsdl:message>
+	<wsdl:portType name="BookServiceImplPortType">
+		<wsdl:operation name="registerBook">
+			<wsdl:input message="ns:registerBookRequest"
+				wsaw:Action="urn:registerBook" />
+			<wsdl:output message="ns:registerBookResponse"
+				wsaw:Action="urn:registerBookResponse" />
+		</wsdl:operation>
+		<wsdl:operation name="searchBook">
+			<wsdl:input message="ns:searchBookRequest"
+				wsaw:Action="urn:searchBook" />
+			<wsdl:output message="ns:searchBookResponse"
+				wsaw:Action="urn:searchBookResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="BookServiceImplSoap11Binding"
+		type="ns:BookServiceImplPortType">
+		<soap:binding
+			transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+		<wsdl:operation name="registerBook">
+			<soap:operation soapAction="urn:registerBook"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="searchBook">
+			<soap:operation soapAction="urn:searchBook"
+				style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="BookServiceImplSoap12Binding"
+		type="ns:BookServiceImplPortType">
+		<soap12:binding
+			transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+		<wsdl:operation name="registerBook">
+			<soap12:operation soapAction="urn:registerBook"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="searchBook">
+			<soap12:operation soapAction="urn:searchBook"
+				style="document" />
+			<wsdl:input>
+				<soap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="BookServiceImplHttpBinding"
+		type="ns:BookServiceImplPortType">
+		<http:binding verb="POST" />
+		<wsdl:operation name="registerBook">
+			<http:operation location="registerBook" />
+			<wsdl:input>
+				<mime:content type="application/xml" part="parameters" />
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content type="application/xml" part="parameters" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="searchBook">
+			<http:operation location="searchBook" />
+			<wsdl:input>
+				<mime:content type="application/xml" part="parameters" />
+			</wsdl:input>
+			<wsdl:output>
+				<mime:content type="application/xml" part="parameters" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="BookService">
+		<wsdl:port name="BookServiceHttpSoap11Endpoint"
+			binding="ns:BookServiceImplSoap11Binding">
+			<soap:address
+				location="http://localhost:8080/axis2/services/BookServiceImpl" />
+		</wsdl:port>
+		<wsdl:port name="BookServiceHttpSoap12Endpoint"
+			binding="ns:BookServiceImplSoap12Binding">
+			<soap12:address
+				location="http://localhost:8080/axis2/services/BookServiceImpl" />
+		</wsdl:port>
+		<wsdl:port name="BookServiceHttpEndpoint"
+			binding="ns:BookServiceImplHttpBinding">
+			<http:address
+				location="http://localhost:8080/axis2/services/BookServiceImpl" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

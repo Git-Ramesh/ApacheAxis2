@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serviceGroup>
+	<service name="BookService" scope="application">
+		<messageReceivers>
+			<messageReceiver
+				mep="http://www.w3.org/ns/wsdl/in-only"
+				class="org.apache.axis2.rpc.receivers.RPCInOnlyMessageReceiver" />
+			<messageReceiver
+				mep="http://www.w3.org/ns/wsdl/in-out"
+				class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
+		</messageReceivers>
+		<parameter name="ServiceClass">com.rs.service.BookServiceImpl</parameter>
+		<parameter name="useOriginalwsdl">true</parameter>
+		<parameter name="modifyUserWSDLPortAddress">true</parameter>
+		<operation name="searchBook"
+			mep="http://www.w3.org/ns/wsdl/in-out"
+			namespace="http://service.rs.com">
+			<actionMapping>http://service.rs.com/searchBook</actionMapping>
+			<outputActionMapping>http://service.rs.com/BookService/searchBookResponse
+			</outputActionMapping>
+		</operation>
+		<operation name="registerBook"
+			mep="http://www.w3.org/ns/wsdl/in-out"
+			namespace="http://service.rs.com">
+			<actionMapping>http://service.rs.com/registerBook</actionMapping>
+			<outputActionMapping>http://service.rs.com/BookService/registerBookResponse
+			</outputActionMapping>
+		</operation>
+	</service>
+</serviceGroup>
